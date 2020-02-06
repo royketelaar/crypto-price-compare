@@ -23,7 +23,7 @@ export class PriceComparatorComponent implements OnInit {
   }
 
   refreshData(){
-    let resp = this.http.get('https://bitonic.nl/api/sell');
+    let resp = this.http.get('https://bitonic.nl/api/buy');
     resp.subscribe((data) => this.price = data.eur);
   }
 }
