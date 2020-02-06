@@ -19,7 +19,7 @@ export class PriceComparatorComponent implements OnInit {
     this.refreshData();
     this.interval = setInterval(() => {
       this.refreshData();
-    }, 10000)
+    }, 5000)
   }
 
   refreshData(){
