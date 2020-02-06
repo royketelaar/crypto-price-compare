@@ -15,7 +15,7 @@ export class PriceComparatorComponent implements OnInit {
   ) { }
 
   ngOnInit() { 
-    let resp = this.http.get('https://bestebitcoindeal.nl/api/btc/providers?amount=1&type=buy&currency=btc');
-    resp.subscribe((data) => console.log(this.prices = data));
+    let resp = this.http.get('https://bitonic.nl/api/buy');
+    resp.subscribe((data) => console.log(this.prices = data.eur));
   }
 }
