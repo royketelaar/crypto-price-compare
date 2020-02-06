@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class PriceComparatorComponent implements OnInit {
 
-  prices : any;
+  prices: any;
 
   constructor(
     private http:HttpClient
@@ -16,7 +16,6 @@ export class PriceComparatorComponent implements OnInit {
 
   ngOnInit() { 
     let resp = this.http.get('https://bestebitcoindeal.nl/api/btc/providers?amount=1&type=buy&currency=btc');
-    resp.subscribe((data) => this.prices = data)
+    resp.subscribe((data) => console.log(this.prices = data));
   }
-
 }
