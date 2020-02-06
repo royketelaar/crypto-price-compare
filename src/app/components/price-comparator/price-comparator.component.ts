@@ -8,14 +8,22 @@ import { HttpClient } from '@angular/common/http'
 })
 export class PriceComparatorComponent implements OnInit {
 
-  prices: any;
+  price: any;
+  interval: any;
 
   constructor(
     private http:HttpClient
   ) { }
 
   ngOnInit() { 
-    let resp = this.http.get('https://bitonic.nl/api/buy');
-    resp.subscribe((data) => console.log(this.prices = data.eur));
+    this.refreshData();
+    this.interval = setInterval(() => {
+      this.refreshData();
+    }, 10000)
+  }
+
+  refreshData(){
+    let resp = this.http.get('https://bitonic.nl/api/sell');
+    resp.subscribe((data) => this.price = data.eur);
   }
 }
