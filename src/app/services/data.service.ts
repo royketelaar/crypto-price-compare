@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Price } from '../interfaces/data'
+import { Observable } from 'rxjs/Observable'
 
 @Injectable()
 export class DataService {
@@ -11,8 +12,8 @@ export class DataService {
     private http: HttpClient
   ) { }
 
-  getBuyPrices() {
-    return this.http.get(this._buy_url)
+  getBuyPrices(): Observable<Price{}> {
+    return this.http.get<Price{}>(this._buy_url)
   }
 
 }
