@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PriceComparatorComponent } from './components/price-comparator/price-comparator.component';
-import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http'
 
 
@@ -12,6 +11,6 @@ import { HttpClientModule } from '@angular/common/http'
   imports:      [ BrowserModule, FormsModule, HttpClientModule ],
   declarations: [ AppComponent, PriceComparatorComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [DataService]
+  providers: []
 })
 export class AppModule { }
