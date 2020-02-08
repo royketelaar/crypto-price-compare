@@ -12,6 +12,7 @@
     "@angular/router": "^8.2.14",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "node": "^13.7.0",
     "rxjs": "^6.5.4",
     "tailwindcss": "^1.2.0",
     "zone.js": "^0.10.2"
