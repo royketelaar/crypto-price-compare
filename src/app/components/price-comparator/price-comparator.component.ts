@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-price-comparator',
@@ -19,7 +20,6 @@ export class PriceComparatorComponent implements OnInit {
 
 
 
-
   constructor(
     private http:HttpClient
   ) { }
@@ -32,29 +32,26 @@ export class PriceComparatorComponent implements OnInit {
   }
 
   refreshData(){
-    let bitonic_buy_price = this.http.get('https://bitonic.nl/api/buy');
-    let bitonic_sell_price = this.http.get('https://bitonic.nl/api/sell');
 
-    bitonic_buy_price.subscribe((data) => 
+   this.http.get('https://bitonic.nl/api/buy').subscribe((data) => 
       this.bitonic_buy_price = data.eur
     )
 
-    bitonic_sell_price.subscribe((data) => 
+    this.http.get('https://bitonic.nl/api/sell').subscribe((data) => 
       this.bitonic_sell_price = data.eur
     )
 
-    let litebit_price = this.http.get('https://api.litebit.eu/market/btc');
-
-    litebit_price.subscribe((data) => {
+    this.http.get('https://api.litebit.eu/market/btc').subscribe((data) => {
         this.litebit_buy_price = data.result.buy,
         this.litebit_sell_price = data.result.sell
       }
     )
-
-    let bitvavo_buy_price = this.http.get('https://api.bitvavo.com/v2/ticker/price');
-    bitvavo_buy_price.subscribe((data) => 
-      // Dit moet naar mijn idee correcter, weet alleen niet goed hoe ik object benader zoekend naar de eerste key-value "market" : "BTC-EUR"
-      this.bitvavo_buy_price = data[16].price // nu haalt ie gewoon 17e object op in de data array
+    this.http.get('https://api.bitvavo.com/v2/ticker/price').subscribe((data) => {
+        const correct_object = data.filter(item => item.market == 'BTC-EUR')
+        this.bitvavo_buy_price = correct_object[0].price
+      }
+  
     )
+    console.log(this.bitvavo_buy_price)
   }
 }

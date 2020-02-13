@@ -1,5 +1,32 @@
-Bitonic: {{ bitonic_buy_price }} | {{ bitonic_sell_price }}
-<br>
-Litebit: {{ litebit_buy_price }} | {{ litebit_sell_price }}
-<br>
-Bitvavo: {{ bitvavo_buy_price }}
+<h2 class="text-center font-bold text-2xl text-blue-700 mb-3">Bitcoin</h2>
+<div class="grid grid-cols-2 gap-5">
+  <div id="btc-buy" class="bg-white rounded-lg py-3 px-4">
+    <h3 class="font-bold text-lg">Buy</h3>
+    
+    <div class="list-item flex justify-between">
+      <span>Bitonic:</span> 
+      <span>{{ bitonic_buy_price }}</span>
+    </div>
+    <div class="list-item flex justify-between">
+      <span>Litebit:</span> 
+      <span>{{ litebit_buy_price }}</span>
+    </div>
+    <div class="list-item flex justify-between">
+      <span>Bitvavo:</span> 
+      <span>{{ bitvavo_buy_price }}</span>
+    </div>
+  </div>
+
+  <div id="btc-sell" class="bg-white rounded-lg py-3 px-4">
+    <h3 class="font-bold text-lg">Sell</h3>
+    <div class="list-item flex justify-between">
+      <span>Bitonic:</span> 
+      <span>{{ bitonic_sell_price }}</span>
+    </div>
+    <div class="list-item flex justify-between">
+      <span>Litebit:</span> 
+      <span>{{ litebit_sell_price }}</span>
+    </div>
+
+  </div>
+</div>
