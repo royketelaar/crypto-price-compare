@@ -52,6 +52,5 @@ export class PriceComparatorComponent implements OnInit {
       }
   
     )
-    console.log(this.bitvavo_buy_price)
   }
 }
