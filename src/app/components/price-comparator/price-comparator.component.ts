@@ -16,8 +16,8 @@ export class PriceComparatorComponent implements OnInit {
   litebit_buy_price: any;
   litebit_sell_price: any;
 
-  bitvavo_buy_price: any;
-
+  coindeal_buy_price: any;
+  coindeal_sell_price: any;
 
 
   constructor(
@@ -46,11 +46,11 @@ export class PriceComparatorComponent implements OnInit {
         this.litebit_sell_price = data.result.sell
       }
     )
-    this.http.get('https://api.bitvavo.com/v2/ticker/price').subscribe((data) => {
-        const correct_object = data.filter(item => item.market == 'BTC-EUR')
-        this.bitvavo_buy_price = correct_object[0].price
-      }
+    // this.http.get('https://api.bitvavo.com/v2/ticker/price').subscribe((data) => {
+    //     const correct_object = data.filter(item => item.market == 'BTC-EUR')
+    //     this.bitvavo_buy_price = correct_object[0].price
+    //   }
   
-    )
+    // )
   }
 }
