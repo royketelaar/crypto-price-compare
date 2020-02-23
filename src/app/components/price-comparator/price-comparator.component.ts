@@ -19,6 +19,8 @@ export class PriceComparatorComponent implements OnInit {
   coindeal_buy_price: any;
   coindeal_sell_price: any;
 
+  buy_data: [];
+  sell_data: [];
 
   constructor(
     private http:HttpClient
@@ -50,7 +52,6 @@ export class PriceComparatorComponent implements OnInit {
     //     const correct_object = data.filter(item => item.market == 'BTC-EUR')
     //     this.bitvavo_buy_price = correct_object[0].price
     //   }
-  
     // )
   }
 }
