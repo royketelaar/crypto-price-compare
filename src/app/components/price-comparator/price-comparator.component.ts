@@ -19,8 +19,18 @@ export class PriceComparatorComponent implements OnInit {
   coindeal_buy_price: any;
   coindeal_sell_price: any;
 
-  buy_data: [];
-  sell_data: [];
+  buy_data: [
+    {
+      broker: string;
+      price: number
+    }
+  ];
+  sell_data: [
+    {
+      broker: string;
+      price: number
+    }
+  ];
 
   constructor(
     private http:HttpClient
@@ -37,6 +47,8 @@ export class PriceComparatorComponent implements OnInit {
 
    this.http.get('https://bitonic.nl/api/buy').subscribe((data) => 
       this.bitonic_buy_price = data.eur
+      // ik wil hier per API data stoppen in bijv de buy data
+      // this.buy_data.push()
     )
 
     this.http.get('https://bitonic.nl/api/sell').subscribe((data) => 
