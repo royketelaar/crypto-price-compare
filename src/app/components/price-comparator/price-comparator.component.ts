@@ -13,15 +13,6 @@ export class PriceComparatorComponent implements OnInit {
   buy_data: PriceData[] = []
   sell_data: PriceData[] = []
 
-  bitonic_buy_price: any;
-  bitonic_sell_price: any;
-
-  litebit_buy_price: any;
-  litebit_sell_price: any;
-
-  coindeal_buy_price: any;
-  coindeal_sell_price: any;
-
   constructor(
     private http: HttpClient
   ) { }
