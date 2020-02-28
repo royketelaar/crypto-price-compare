@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { filter } from 'rxjs/operators';
+import { PriceData } from '../price-data'
 
 @Component({
   selector: 'app-price-comparator',
@@ -9,6 +10,7 @@ import { filter } from 'rxjs/operators';
 })
 export class PriceComparatorComponent implements OnInit {
   interval: any;
+  but_data: PriceData
   
   bitonic_buy_price: any;
   bitonic_sell_price: any;
@@ -24,13 +26,13 @@ export class PriceComparatorComponent implements OnInit {
       broker: string;
       price: number
     }
-  ];
+  ] = []; 
   sell_data: [
     {
       broker: string;
       price: number
     }
-  ];
+  ] = []
 
   constructor(
     private http:HttpClient
@@ -47,7 +49,7 @@ export class PriceComparatorComponent implements OnInit {
 
    this.http.get('https://bitonic.nl/api/buy').subscribe((data) => 
       this.bitonic_buy_price = data.eur
-      // ik wil hier per API data stoppen in bijv de buy data
+      
       // this.buy_data.push()
     )
 
