@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { filter } from 'rxjs/operators';
-import { PriceData } from '../price-data'
+import { PriceData } from '../../interfaces/price-data';
 
 @Component({
   selector: 'app-price-comparator',
@@ -10,8 +10,9 @@ import { PriceData } from '../price-data'
 })
 export class PriceComparatorComponent implements OnInit {
   interval: any;
-  but_data: PriceData
-  
+  buy_data: PriceData[] = []
+  sell_data: PriceData[] = []
+
   bitonic_buy_price: any;
   bitonic_sell_price: any;
 
@@ -21,21 +22,8 @@ export class PriceComparatorComponent implements OnInit {
   coindeal_buy_price: any;
   coindeal_sell_price: any;
 
-  buy_data: [
-    {
-      broker: string;
-      price: number
-    }
-  ] = []; 
-  sell_data: [
-    {
-      broker: string;
-      price: number
-    }
-  ] = []
-
   constructor(
-    private http:HttpClient
+    private http: HttpClient
   ) { }
 
   ngOnInit() { 
@@ -45,13 +33,16 @@ export class PriceComparatorComponent implements OnInit {
     }, 5000)
   }
 
-  refreshData(){
+  refreshData() {
+    this.buy_data = []
+    this.sell_data = []
 
-   this.http.get('https://bitonic.nl/api/buy').subscribe((data) => 
-      this.bitonic_buy_price = data.eur
-      
-      // this.buy_data.push()
-    )
+    this.http.get('https://bitonic.nl/api/buy').subscribe((data) =>  {
+      // this.bitonic_buy_price = data.eur
+      this.buy_data.push({ broker: 'bitonic', price: data.eur })
+    })
+
+
 
     this.http.get('https://bitonic.nl/api/sell').subscribe((data) => 
       this.bitonic_sell_price = data.eur
@@ -67,5 +58,8 @@ export class PriceComparatorComponent implements OnInit {
     //     this.bitvavo_buy_price = correct_object[0].price
     //   }
     // )
+
+    console.log(this.buy_data)
+
   }
 }
