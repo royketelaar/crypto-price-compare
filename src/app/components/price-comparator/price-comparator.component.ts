@@ -28,38 +28,43 @@ export class PriceComparatorComponent implements OnInit {
 
   ngOnInit() { 
     this.refreshData();
-    this.interval = setInterval(() => {
-      this.refreshData();
-    }, 5000)
+    // this.interval = setInterval(() => {
+    //   this.refreshData();
+    // }, 10000)
   }
 
   refreshData() {
     this.buy_data = []
     this.sell_data = []
 
+
     this.http.get('https://bitonic.nl/api/buy').subscribe((data) =>  {
-      // this.bitonic_buy_price = data.eur
-      this.buy_data.push({ broker: 'bitonic', price: data.eur })
+      this.buy_data.push({ broker: 'Bitonic', price: parseFloat(data.eur).toFixed(2) })
     })
 
-
-
     this.http.get('https://bitonic.nl/api/sell').subscribe((data) => 
-      this.bitonic_sell_price = data.eur
+      this.sell_data.push({ broker: 'Bitonic', price: parseFloat(data.eur).toFixed(2) })
     )
 
-    this.http.get('https://api.litebit.eu/market/btc').subscribe((data) => {
-        this.litebit_buy_price = data.result.buy,
-        this.litebit_sell_price = data.result.sell
+    this.http.get('https://api.litebit.eu/market/btc').subscribe((data) => {        
+        this.buy_data.push({ broker: 'Litebit', price: parseFloat(data.result.buy).toFixed(2) })
+        this.sell_data.push({ broker: 'Litebit', price: parseFloat(data.result.sell).toFixed(2) })        
       }
     )
+
+    this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    this.sell_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    
+    // Data heeft ie op dit moment nog niet ingeladen (waarschijnlijk omdat subscribe call nog niet af is) dus geeft lege array terug
+    // Weet je een manier hoe ik kan wachten tot alle data geladen is en dan pas een sortering uitvoeren?
+    console.log(this.buy_data)
+
+
     // this.http.get('https://api.bitvavo.com/v2/ticker/price').subscribe((data) => {
     //     const correct_object = data.filter(item => item.market == 'BTC-EUR')
     //     this.bitvavo_buy_price = correct_object[0].price
     //   }
     // )
-
-    console.log(this.buy_data)
-
+    
   }
 }
