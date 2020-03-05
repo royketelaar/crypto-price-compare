@@ -47,6 +47,8 @@ export class PriceComparatorComponent implements OnInit {
     //     this.sortData() 
     //   }
     // )
+
+    
     // Sistemkoin
     this.http.get('https://api.sistemkoin.com/ticker').subscribe((data) => {
       this.buy_data.push({ broker: 'Sistemkoin', price: parseFloat(data.USD.DOGE.askPrice).toFixed(8) })

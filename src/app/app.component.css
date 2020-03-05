@@ -1,3 +1,9 @@
 p {
   font-family: Lato;
 }
+
+.doge {
+  background: linear-gradient(to right, rgb(121, 172, 202, 0.95), rgb(121, 172, 202, 0.95)), url('https://i.redd.it/oiwy410jekn21.png');
+  background-size: cover;
+}
+
