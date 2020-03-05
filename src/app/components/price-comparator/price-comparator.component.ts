@@ -12,6 +12,7 @@ export class PriceComparatorComponent implements OnInit {
   interval: any;
   buy_data: PriceData[] = []
   sell_data: PriceData[] = []
+  total_apis: number = 0;
 
   constructor(
     private http: HttpClient
@@ -19,40 +20,17 @@ export class PriceComparatorComponent implements OnInit {
 
   ngOnInit() { 
     this.refreshData();
-    // this.interval = setInterval(() => {
-    //   this.refreshData();
-    // }, 10000)
   }
 
   refreshData() {
     this.buy_data = []
     this.sell_data = []
 
-    // // Bitonic
-    // this.http.get('https://bitonic.nl/api/buy').subscribe((data) =>  {
-    //   this.buy_data.push({ broker: 'Bitonic', price: parseFloat(data.eur).toFixed(2) })
-    //   this.sortData()
-
-    // })
-
-    // this.http.get('https://bitonic.nl/api/sell').subscribe((data) => {
-    //   this.sell_data.push({ broker: 'Bitonic', price: parseFloat(data.eur).toFixed(2) })
-    //   this.sortData()
-    // })
-
-    // // Litebit
-    // this.http.get('https://api.litebit.eu/market/btc').subscribe((data) => {        
-    //     this.buy_data.push({ broker: 'Litebit', price: parseFloat(data.result.buy).toFixed(2) })
-    //     this.sell_data.push({ broker: 'Litebit', price: parseFloat(data.result.sell).toFixed(2) })       
-    //     this.sortData() 
-    //   }
-    // )
-
-    
     // Sistemkoin
     this.http.get('https://api.sistemkoin.com/ticker').subscribe((data) => {
       this.buy_data.push({ broker: 'Sistemkoin', price: parseFloat(data.USD.DOGE.askPrice).toFixed(8) })
       this.sell_data.push({ broker: 'Sistemkoin', price: parseFloat(data.USD.DOGE.bidPrice).toFixed(8) })
+      this.total_apis++
       this.sortData() 
     })
 
@@ -60,13 +38,16 @@ export class PriceComparatorComponent implements OnInit {
     this.http.get('https://api.alterdice.com/v1/public/ticker?pair=DOGEUSD').subscribe((data) => {
       this.buy_data.push({ broker: 'Alterdice', price: parseFloat(data.data.high).toFixed(8) })
       this.sell_data.push({ broker: 'Alterdice', price: parseFloat(data.data.low).toFixed(8) })
+      this.total_apis++
       this.sortData() 
+
     })
 
     // Exmo
     this.http.get('https://api.exmo.com/v1/ticker/').subscribe((data) => {
       this.buy_data.push({ broker: 'Exmo', price: parseFloat(data.DOGE_USD.buy_price).toFixed(8) })
       this.sell_data.push({ broker: 'Exmo', price: parseFloat(data.DOGE_USD.sell_price).toFixed(8) })
+      this.total_apis++
       this.sortData() 
     })
 
@@ -78,12 +59,16 @@ export class PriceComparatorComponent implements OnInit {
 
       this.buy_data.push({ broker: 'SouthXChange', price: parseFloat(buy_price).toFixed(8) })
       this.sell_data.push({ broker: 'SouthXChange', price: parseFloat(sell_price).toFixed(8) })
+      this.total_apis++
       this.sortData() 
     })
     
   }
   sortData() {
-    this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-    this.sell_data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    // Checkt of buy_data en sell_data gelijk is aan totaal opgehaalde API's
+    if (this.buy_data.length && this.sell_data.length === this.total_apis) {
+      this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+      this.sell_data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    }
   }
 }
