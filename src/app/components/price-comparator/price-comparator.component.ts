@@ -28,27 +28,27 @@ export class PriceComparatorComponent implements OnInit {
     this.buy_data = []
     this.sell_data = []
 
-
+    // Bitonic
     this.http.get('https://bitonic.nl/api/buy').subscribe((data) =>  {
       this.buy_data.push({ broker: 'Bitonic', price: parseFloat(data.eur).toFixed(2) })
+      this.sortData()
+
     })
 
-    this.http.get('https://bitonic.nl/api/sell').subscribe((data) => 
+    this.http.get('https://bitonic.nl/api/sell').subscribe((data) => {
       this.sell_data.push({ broker: 'Bitonic', price: parseFloat(data.eur).toFixed(2) })
-    )
+      this.sortData()
+    })
 
+    // Litebit
     this.http.get('https://api.litebit.eu/market/btc').subscribe((data) => {        
         this.buy_data.push({ broker: 'Litebit', price: parseFloat(data.result.buy).toFixed(2) })
-        this.sell_data.push({ broker: 'Litebit', price: parseFloat(data.result.sell).toFixed(2) })        
+        this.sell_data.push({ broker: 'Litebit', price: parseFloat(data.result.sell).toFixed(2) })       
+        this.sortData() 
       }
     )
 
-    this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-    this.sell_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-    
-    // Data heeft ie op dit moment nog niet ingeladen (waarschijnlijk omdat subscribe call nog niet af is) dus geeft lege array terug
-    // Weet je een manier hoe ik kan wachten tot alle data geladen is en dan pas een sortering uitvoeren?
-    console.log(this.buy_data)
+
 
 
     // this.http.get('https://api.bitvavo.com/v2/ticker/price').subscribe((data) => {
@@ -57,5 +57,9 @@ export class PriceComparatorComponent implements OnInit {
     //   }
     // )
     
+  }
+  sortData() {
+    this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    this.sell_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
 }
