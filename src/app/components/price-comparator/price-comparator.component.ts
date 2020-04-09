@@ -10,9 +10,7 @@ import { PriceData } from '../../interfaces/price-data';
 })
 export class PriceComparatorComponent implements OnInit {
   interval: any;
-  buy_data: PriceData[] = []
-  sell_data: PriceData[] = []
-  total_apis: number = 0;
+  price_data: PriceData[]
 
   constructor(
     private http: HttpClient
@@ -23,8 +21,7 @@ export class PriceComparatorComponent implements OnInit {
   }
 
   refreshData() {
-    this.buy_data = []
-    this.sell_data = []
+    this.price_data = []
 
     // // Sistemkoin
     // this.http.get('https://api.sistemkoin.com/ticker').subscribe((data) => {
@@ -63,16 +60,24 @@ export class PriceComparatorComponent implements OnInit {
     //   this.sortData() 
     // })
 
-    this.http.get('https://api.coinranking.com/v1/public/markets').subscribe((data) => {
-      console.log(data)
-    })
-    
+    this.http.get('https://api.coinranking.com/v1/public/markets').subscribe((result) => {
+      const btc_usdt_pairs = result.data.markets.filter(pair => (pair.baseSymbol === "BTC" && pair.quoteSymbol === "USDT"))
+      
+      for (let pair of btc_usdt_pairs) {
+            this.price_data.push({
+              broker: pair.quoteSymbol,
+              buy_price: pair.price,
+              sell_price: pair.tickerClose
+            })
+      }
+    }) 
+    console.log(this.price_data)
   }
   sortData() {
     // Checkt of buy_data en sell_data gelijk is aan totaal opgehaalde API's
-    if (this.buy_data.length && this.sell_data.length === this.total_apis) {
-      this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-      this.sell_data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-    }
+    // if (this.buy_data.length && this.sell_data.length === this.total_apis) {
+    //   this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    //   this.sell_data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    // }
   }
 }
