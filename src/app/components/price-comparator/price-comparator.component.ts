@@ -62,22 +62,18 @@ export class PriceComparatorComponent implements OnInit {
 
     this.http.get('https://api.coinranking.com/v1/public/markets').subscribe((result) => {
       const btc_usdt_pairs = result.data.markets.filter(pair => (pair.baseSymbol === "BTC" && pair.quoteSymbol === "USDT"))
-      
       for (let pair of btc_usdt_pairs) {
-            this.price_data.push({
-              broker: pair.quoteSymbol,
-              buy_price: pair.price,
-              sell_price: pair.tickerClose
-            })
+        this.price_data.push({
+          broker: pair.sourceName,
+          buy_price: parseFloat(pair.price).toFixed(2),
+          sell_price: parseFloat(pair.tickerClose).toFixed(2)
+        })
       }
     }) 
-    console.log(this.price_data)
   }
   sortData() {
     // Checkt of buy_data en sell_data gelijk is aan totaal opgehaalde API's
-    // if (this.buy_data.length && this.sell_data.length === this.total_apis) {
-    //   this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-    //   this.sell_data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-    // }
+    // this.buy_data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    // this.sell_data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   }
 }

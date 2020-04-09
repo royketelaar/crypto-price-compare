@@ -3,17 +3,18 @@
   <div id="btc-buy" class="bg-white rounded-lg py-3 px-4">
     <h3 class="font-bold text-lg">Buy</h3>
     
-    <div class="list-item flex justify-between" *ngFor="let data of buy_data">
+    <div class="list-item flex justify-between" *ngFor="let data of price_data">
       <span>{{ data.broker }}:</span> 
-      <span>$ {{ data.price }}</span>
+      <span>$ {{ data.buy_price }}</span>
     </div>
   </div>
 
   <div id="btc-sell" class="bg-white rounded-lg py-3 px-4">
     <h3 class="font-bold text-lg">Sell</h3>
-    <div class="list-item flex justify-between" *ngFor="let data of sell_data">
+    <div class="list-item flex justify-between" *ngFor="let data of price_data">
       <span>{{ data.broker }}:</span> 
-      <span>$ {{ data.price }}</span>
+      <span>$ {{ data.sell_price }}</span>
     </div>
   </div>
 </div>
+ 
